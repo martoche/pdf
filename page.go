@@ -170,6 +170,10 @@ func (f *Font) Encoder() TextEncoding {
 }
 
 func (f Font) getEncoder() TextEncoding {
+	if !f.V.Key("ToUnicode").IsNull() {
+		return f.charmapEncoding()
+	}
+
 	enc := f.V.Key("Encoding")
 	switch enc.Kind() {
 	case Name:
